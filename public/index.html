@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tiny HQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="office"></canvas>
+  <div id="bubbles" class="layer"></div>
+  <div id="tip" class="tip" hidden></div>
+  <div id="pop" class="win pop" hidden></div>
+
+  <header class="hud top">
+    <div class="win bar info">
+      <div class="brand"><span class="logo">▣</span> Tiny HQ</div>
+      <span id="mode" class="pill"></span>
+      <div class="proj">
+        <span id="project" class="proj-name"></span>
+        <span id="repo" class="proj-dir muted" title="Copy path"></span>
+      </div>
+    </div>
+    <div class="win bar menu">
+      <button class="btn" data-open="setup" title="Setup checklist">Setup</button>
+      <button class="btn" data-open="welcome" title="Team">Team</button>
+      <button class="btn" data-open="settings" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <aside class="hud left">
+    <section class="win" id="w-team">
+      <h3 class="tab">Team <span id="team-count" class="muted"></span></h3>
+      <div id="team" class="body"></div>
+    </section>
+  </aside>
+
+  <aside class="hud right">
+    <section class="win" id="w-actions">
+      <h3 class="tab">Action items <span id="action-count" class="badge"></span></h3>
+      <div id="actions" class="body"></div>
+    </section>
+    <section class="win grow" id="w-activity">
+      <h3 class="tab">Activity</h3>
+      <ol id="activity" class="feed body"></ol>
+    </section>
+    <section class="win grow" id="w-term">
+      <h3 class="tab"><span id="term-title">Terminal</span><button id="stop" class="btn tiny">Stop</button></h3>
+      <pre id="term" class="term body"></pre>
+    </section>
+  </aside>
+
+  <div class="hud bottom">
+    <section class="win" id="w-board">
+      <h3 class="tab">Task board</h3>
+      <div class="board body">
+        <div class="col" data-col="todo"><h4>To do</h4><div></div></div>
+        <div class="col" data-col="working"><h4>Working</h4><div></div></div>
+        <div class="col" data-col="review"><h4>In review</h4><div></div></div>
+        <div class="col" data-col="merged"><h4>Merged</h4><div></div></div>
+      </div>
+    </section>
+    <form id="msg" class="win bar msg">
+      <canvas id="msg-face"></canvas>
+      <select id="msg-to" aria-label="Send to"></select>
+      <input id="msg-text" placeholder="Tell the lead what to build…" autocomplete="off" />
+      <button class="btn primary">Send ⏎</button>
+    </form>
+  </div>
+
+  <dialog id="welcome">
+    <form method="dialog" id="welcome-form">
+      <h2>Welcome to HQ</h2>
+      <p class="muted">Name your project, pick a lead and some workers. Each worker gets a desk, a clone of the repo and its own sandbox.</p>
+      <label>Project <input name="project" required value="My project" /></label>
+      <fieldset>
+        <legend>Lead</legend>
+        <div class="row"><input name="lead" required value="Ada" /><select name="leadRuntime"><option value="claude">Claude Code</option><option value="codex">Codex</option></select></div>
+      </fieldset>
+      <fieldset>
+        <legend>Workers</legend>
+        <div id="workers"></div>
+        <button type="button" class="btn tiny" id="add-worker">+ Add worker</button>
+      </fieldset>
+      <label class="check"><input type="checkbox" name="demo" /> Demo mode (simulated agents, nothing touches your repo)</label>
+      <p class="warn muted">Starting a new team clears the current board.</p>
+      <menu><button value="cancel" class="btn" formnovalidate>Cancel</button><button value="ok" class="btn primary">Start team</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="setup">
+    <form method="dialog">
+      <h2>Setup checklist</h2>
+      <p class="muted">What HQ needs on this machine. Run the command next to anything missing.</p>
+      <ul id="checks" class="checks"></ul>
+      <menu><button class="btn" id="recheck" type="button">Check again</button><button class="btn primary">Done</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="settings">
+    <form method="dialog" id="settings-form">
+      <h2>Settings</h2>
+      <label class="check"><input type="checkbox" name="demo" /> Demo mode</label>
+      <label class="check"><input type="checkbox" name="sandbox" /> Run agents in Docker sandboxes (off = run locally, with permission prompts kept on)</label>
+      <label>Sandbox image <input name="image" /></label>
+      <label>Base branch <input name="baseBranch" placeholder="repo default" /></label>
+      <menu><button class="btn danger" id="reset" type="button">Reset HQ</button><button value="cancel" class="btn" formnovalidate>Cancel</button><button value="ok" class="btn primary">Save</button></menu>
+    </form>
+  </dialog>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

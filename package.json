@@ -1,0 +1,13 @@
+{
+  "name": "tiny-hq",
+  "version": "0.1.0",
+  "description": "Run a team of AI coding agents on your repo and watch them work in a pixel-art office.",
+  "type": "module",
+  "bin": { "tiny-hq": "bin/hq.js" },
+  "scripts": {
+    "start": "node bin/hq.js",
+    "demo": "node bin/hq.js --demo"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}

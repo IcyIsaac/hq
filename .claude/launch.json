@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "hq-demo", "runtimeExecutable": "node", "runtimeArgs": ["bin/hq.js", "--demo", "--no-open"], "port": 7430 }
+  ]
+}
